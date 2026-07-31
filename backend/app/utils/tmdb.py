@@ -1,4 +1,5 @@
 import httpx
+
 from app.config import settings
 
 BASE_URL = "https://api.themoviedb.org/3"
@@ -33,7 +34,7 @@ MOVIE_GENRE = [
 
 def genre_name_to_id(name: str) -> int | None:
     for g in MOVIE_GENRE:
-        if g["name"].lower == name.lower():
+        if g["name"].lower() == name.lower():
             return g["id"]
     return None
 
@@ -58,13 +59,11 @@ async def discover_film(
 ) -> dict:
     params = {}
     if genre:
-        genre_id = genre_name_to_id(genre)
-        if genre_id:
-            params["with_genres"] = genre_id
+        params["with_genres"] = genre
     if year:
         params["primary_release_year"] = year
     if min_rating:
-        params["vote_average.gte"]
+        params["vote_average.gte"] = min_rating
     if cast:
         params["with_cast"] = cast
     if keywords:

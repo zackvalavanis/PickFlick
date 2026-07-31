@@ -29,5 +29,7 @@ async def discover(
     return discovered_film["results"]
 
 
-# @router.post('/movies/chat', response_model=ChatResponse)
-# async def chat(body: ChatRequest):
+@router.post("/movies/chat", response_model=ChatResponse)
+async def chat(body: ChatRequest):
+    reply = await claude_agent.run_chat(body.message, body.history)
+    return ChatResponse(reply=reply)
