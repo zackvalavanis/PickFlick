@@ -2,6 +2,7 @@ import './App.css'
 import { RouterProvider, Outlet, createBrowserRouter } from "react-router";
 import { Header } from './screens/Header/Header';
 import { Footer } from './screens/Footer/Footer';
+import { HomePage } from './screens/HomePage/HomePage';
 
 function App() {
   const router = createBrowserRouter([
@@ -12,7 +13,10 @@ function App() {
           <Outlet />
           <Footer />
         </div>
-      )
+      ),
+      children: [
+        { path: '/', element: <HomePage /> }
+      ]
     }
   ])
 
