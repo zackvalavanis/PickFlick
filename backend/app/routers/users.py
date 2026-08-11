@@ -4,17 +4,23 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models.user import User
 from app.schemas.user import UserCreate, UserPublic, UserResponse
-from app.utils.auth import hash_password  # add this import at the top
+from app.utils.auth import hash_password, get_current_user  # add this import at the top
 
 router = APIRouter()
 
 db_dependency = Depends(get_db)
+curr_user = Depends(get_current_user)
 
 
 @router.get("/users", response_model=list[UserPublic])
 def get_users(db: Session = db_dependency):
     users = db.query(User).all()
     return users
+
+
+@router.get("/users/me", response_model=UserResponse)
+def get_user_me(current_user: User = curr_user):
+    return current_user
 
 
 @router.get("/users/{id}", response_model=UserResponse)

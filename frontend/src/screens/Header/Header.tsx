@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Drawer, Button, List, ListItem, ListItemButton, ListItemText } from "@mui/material"
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router";
+import PickFlickLogo from '../../assets/pickflick-logo.svg'
 
 
 export function Header() {
@@ -10,12 +11,12 @@ export function Header() {
   const navigate = useNavigate()
 
   const items = [
-    { text: "Home", path: "/" },
+    { text: <img src={PickFlickLogo} style={{ height: "50px" }}></img>, path: '/' },
     { text: "Movies", path: "/movies" },
     { text: "Watchlist", path: "/watchlist" },
     ...(user
       ? [{ text: "Profile", path: "/profile" }, { text: "Logout", path: "/logout" }]
-      : [{ text: "Login", path: "/login" }, { text: "Sign Up", path: "/signup" }]),
+      : [{ text: "Login", path: "/login" }, { text: "Sign Up", path: "/register" }]),
   ]
 
 
@@ -53,7 +54,7 @@ export function Header() {
         onClose={toggleDrawer(false)}
         sx={{
           "& .MuiDrawer-paper": {
-            backgroundColor: "#1a1a1a",
+            backgroundColor: "#212121",
             width: 260,
           },
         }}

@@ -1,56 +1,25 @@
 import { useState } from "react"
-import type { Login } from "../../Types/types"
+import type { Register } from "../../Types/types"
 import { FaEye, FaEyeSlash } from "react-icons/fa"
 
-import './Login.css'
-import { UseAuth } from "./UseAuth"
+import './SignUp.css'
 
-export function Login() {
+export function Register() {
   const [loading, setLoading] = useState(false)
-  const { login } = UseAuth()
   const [showPassword, setShowPassword] = useState(false)
-  const [formData, setFormData] = useState<Login>({
+  const [formData, setFormData] = useState<Register>({
+    first_name: "",
+    last_name: "",
     email: "",
     password: "",
   })
 
 
 
-  const handleLogin = async (formData: Login) => {
+  const handleRegister = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault()
     setLoading(true)
     console.log("Log in", loading)
-
-    try {
-      const res = await fetch('http://localhost:8000/auth/login', {
-        "method": "POST",
-        "headers": {
-          "Content-Type": "application/json"
-        },
-        "body": JSON.stringify({
-          email: formData.email,
-          password: formData.password
-        })
-      })
-      const data = await res.json()
-
-      if (!res.ok) {
-        console.log("Login Failed")
-        return;
-      }
-
-      if (!data?.access_token) {
-        console.log('No access token returned')
-        return;
-      }
-      console.log('Login Success')
-
-      login(data.access_token)
-
-    } catch (error) {
-      console.log("There was an error", error)
-    } finally {
-      setLoading(false)
-    }
   }
 
 
@@ -68,18 +37,10 @@ export function Login() {
             </div>
           </div>
 
-          <form className='form-login' onSubmit={(e) => {
-            e.preventDefault()
-            handleLogin(formData)
-          }}>
-
-            <input
-              name='email'
-              placeholder="Email"
-              type='email'
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            />
-
+          <form className='form-login' onSubmit={handleRegister}>
+            <input name='first_name' placeholder="First Name" type='text' />
+            <input name='last_name' placeholder="Last Name" type='text' />
+            <input name='email' placeholder="Email" type='email' />
             <div style={{ position: "relative" }}>
               <input
                 id='passwordField'
@@ -102,7 +63,6 @@ export function Login() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
-            <button type='submit'>Login</button>
           </form>
 
           <div className='bottom-box'>

@@ -2,6 +2,7 @@ import { useState, useEffect, type ReactNode } from 'react'
 import { AuthContext } from './AuthContext'
 import type { User } from '../../Types/types'
 
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [token, setToken] = useState<string | null>(localStorage.getItem('access_token'))

@@ -1,0 +1,12 @@
+<svg width="300" height="82" viewBox="0 0 300 82" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="PickFlick">
+  <title>PickFlick</title>
+  <rect x="0" y="0" width="82" height="82" rx="19" fill="#FF5252"/>
+  <rect x="10" y="16" width="6" height="9" rx="1.5" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="10" y="37" width="6" height="9" rx="1.5" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="10" y="58" width="6" height="9" rx="1.5" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="66" y="16" width="6" height="9" rx="1.5" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="66" y="37" width="6" height="9" rx="1.5" fill="#FFFFFF" opacity="0.9"/>
+  <rect x="66" y="58" width="6" height="9" rx="1.5" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M34 27 L58 41 L34 55 Z" fill="#FFFFFF"/>
+  <text x="100" y="53" font-family="'Segoe UI', system-ui, -apple-system, Roboto, Helvetica, Arial, sans-serif" font-weight="600" font-size="42"><tspan fill="currentColor">Pick</tspan><tspan fill="#FF5252">Flick</tspan></text>
+</svg>
