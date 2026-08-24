@@ -1,42 +1,50 @@
-import './App.css'
-import { RouterProvider, Outlet, createBrowserRouter } from "react-router";
-import { Header } from './screens/Header/Header';
-import { Footer } from './screens/Footer/Footer';
-import { HomePage } from './screens/HomePage/HomePage';
-import { MoviesPage } from './screens/MoviesPage/MoviesPage';
-import { Profile } from './screens/Profile/Profile';
-import { Login } from './screens/Auth/Login';
-import { Register } from './screens/Auth/SignUp';
-import { AuthProvider } from './screens/Auth/AuthProvider';
-import { Logout } from './screens/Auth/Logout';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Bounce, ToastContainer } from "react-toastify";
 
-const router = createBrowserRouter([
-  {
-    element: (
-      <div className='app-layout'>
-        <Header />
-        <Outlet />
-        <Footer />
-      </div>
-    ),
-    children: [
-      { path: '/', element: <HomePage /> },
-      { path: '/movies', element: <MoviesPage /> },
-      { path: '/profile', element: <Profile /> },
-      { path: '/login', element: <Login /> },
-      { path: '/register', element: <Register /> },
-      { path: '/logout', element: <Logout /> }
-    ]
-  }
-])
-
+import { Header } from "./screens/Header/Header";
+import { Footer } from "./screens/Footer/Footer";
+import { HomePage } from "./screens/HomePage/HomePage";
+import { MoviesPage } from "./screens/MoviesPage/MoviesPage";
+import { Profile } from "./screens/Profile/Profile";
+import { Login } from "./screens/Auth/Login";
+import { Register } from "./screens/Auth/SignUp";
+import { AuthProvider } from "./screens/Auth/AuthProvider";
 
 function App() {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
-  )
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="app-layout">
+          <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            transition={Bounce}
+          />
+
+          <Header />
+
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/movies" element={<MoviesPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Routes>
+
+          <Footer />
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

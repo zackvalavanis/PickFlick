@@ -1,90 +1,95 @@
-import { useState } from "react"
-import type { Login } from "../../Types/types"
-import { FaEye, FaEyeSlash } from "react-icons/fa"
+import { useState } from "react";
+import type { Login as LoginType } from "../../Types/types";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import './Login.css'
-import { UseAuth } from "./UseAuth"
-import { useNavigate } from "react-router"
-import { Bounce, toast, ToastContainer } from "react-toastify"
+import "./Login.css";
+import { useAuth } from "./useAuth";
+import { useNavigate } from "react-router-dom";
+import { Bounce, toast } from "react-toastify";
 
 export function Login() {
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-  const { login } = UseAuth()
-  const [showPassword, setShowPassword] = useState(false)
-  const [formData, setFormData] = useState<Login>({
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const [formData, setFormData] = useState<LoginType>({
     email: "",
     password: "",
-  })
+  });
 
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    if (loading) return;
 
-  const handleLogin = async (formData: Login) => {
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const res = await fetch('http://localhost:8000/auth/login', {
-        "method": "POST",
-        "headers": {
-          "Content-Type": "application/json"
+      const res = await fetch("http://localhost:8000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-        "body": JSON.stringify({
+        body: JSON.stringify({
           email: formData.email,
-          password: formData.password
-        })
-      })
-      const data = await res.json()
+          password: formData.password,
+        }),
+      });
+
+      const data = await res.json();
 
       if (!res.ok) {
+        toast.error(data?.detail || "Invalid email or password", {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+          transition: Bounce,
+        });
+
         return;
       }
 
       if (!data?.access_token) {
-        console.log('No access token returned')
+        toast.error("Login failed: no access token returned.", {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+          transition: Bounce,
+        });
+
         return;
       }
-      login(data.access_token)
-      toast('Logged In successfully', {
-        position: "top-center",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: false,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-        onClose: () => navigate('/')
-      });
+
+      /*
+       * login() stores the token and updates the AuthProvider.
+       * Awaiting it allows the authentication flow to complete
+       * before we navigate away from the login page.
+       */
+      await login(data.access_token);
+      navigate('/', { state: { justLoggedIn: true } })
+
 
     } catch (error) {
-      console.log("There was an error", error)
+      console.error("There was an error logging in:", error);
+
+      toast.error("Unable to connect to the server.", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+        transition: Bounce,
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
-
-
-
+  };
 
   return (
     <div className="login-page">
-      < ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick={false}
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        transition={Bounce}
-      />
       <div className="left-side">
         <div className="login-box">
-          <div className='top-box'>
+          <div className="top-box">
             <div className="reel">
               {Array.from({ length: 10 }).map((_, i) => (
                 <div key={i} className="reel-hole" />
@@ -92,44 +97,73 @@ export function Login() {
             </div>
           </div>
 
-          <form className='form-login' onSubmit={(e) => {
-            e.preventDefault()
-            handleLogin(formData)
-          }}>
-
+          <form className="form-login" onSubmit={handleLogin}>
             <input
-              name='email'
+              name="email"
               placeholder="Email"
-              type='email'
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              type="email"
+              value={formData.email}
+              autoComplete="email"
+              required
+              disabled={loading}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  email: e.target.value,
+                })
+              }
             />
 
             <div style={{ position: "relative" }}>
               <input
-                id='passwordField'
-                name='password'
+                id="passwordField"
+                name="password"
                 placeholder="Password"
-                type={showPassword ? 'text' : 'password'}
-                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                style={{ paddingRight: "40px" }}
+                type={showPassword ? "text" : "password"}
+                value={formData.password}
+                autoComplete="current-password"
+                required
+                disabled={loading}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    password: e.target.value,
+                  })
+                }
+                style={{
+                  paddingRight: "40px",
+                }}
               />
-              <span
+
+              <button
+                type="button"
+                aria-label={
+                  showPassword ? "Hide password" : "Show password"
+                }
+                onClick={() => setShowPassword((prev) => !prev)}
+                disabled={loading}
                 style={{
                   position: "absolute",
                   right: "10px",
                   top: "50%",
                   transform: "translateY(-50%)",
-                  cursor: "pointer"
+                  cursor: loading ? "default" : "pointer",
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  color: "inherit",
                 }}
-                onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
+              </button>
             </div>
-            <button type='submit'>Login</button>
+
+            <button type="submit" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
           </form>
 
-          <div className='bottom-box'>
+          <div className="bottom-box">
             <div className="reel">
               {Array.from({ length: 10 }).map((_, i) => (
                 <div key={i} className="reel-hole" />
@@ -138,8 +172,8 @@ export function Login() {
           </div>
         </div>
       </div>
-      <div className='right-side'>
-      </div>
+
+      <div className="right-side"></div>
     </div>
-  )
+  );
 }
