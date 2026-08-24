@@ -4,9 +4,12 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"
 
 import './Login.css'
 import { UseAuth } from "./UseAuth"
+import { useNavigate } from "react-router"
+import { Bounce, toast, ToastContainer } from "react-toastify"
 
 export function Login() {
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
   const { login } = UseAuth()
   const [showPassword, setShowPassword] = useState(false)
   const [formData, setFormData] = useState<Login>({
@@ -18,7 +21,6 @@ export function Login() {
 
   const handleLogin = async (formData: Login) => {
     setLoading(true)
-    console.log("Log in", loading)
 
     try {
       const res = await fetch('http://localhost:8000/auth/login', {
@@ -34,7 +36,6 @@ export function Login() {
       const data = await res.json()
 
       if (!res.ok) {
-        console.log("Login Failed")
         return;
       }
 
@@ -42,9 +43,19 @@ export function Login() {
         console.log('No access token returned')
         return;
       }
-      console.log('Login Success')
-
       login(data.access_token)
+      toast('Logged In successfully', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+        onClose: () => navigate('/')
+      });
 
     } catch (error) {
       console.log("There was an error", error)
@@ -58,6 +69,19 @@ export function Login() {
 
   return (
     <div className="login-page">
+      < ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition={Bounce}
+      />
       <div className="left-side">
         <div className="login-box">
           <div className='top-box'>

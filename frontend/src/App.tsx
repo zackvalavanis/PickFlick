@@ -8,27 +8,30 @@ import { Profile } from './screens/Profile/Profile';
 import { Login } from './screens/Auth/Login';
 import { Register } from './screens/Auth/SignUp';
 import { AuthProvider } from './screens/Auth/AuthProvider';
+import { Logout } from './screens/Auth/Logout';
+
+const router = createBrowserRouter([
+  {
+    element: (
+      <div className='app-layout'>
+        <Header />
+        <Outlet />
+        <Footer />
+      </div>
+    ),
+    children: [
+      { path: '/', element: <HomePage /> },
+      { path: '/movies', element: <MoviesPage /> },
+      { path: '/profile', element: <Profile /> },
+      { path: '/login', element: <Login /> },
+      { path: '/register', element: <Register /> },
+      { path: '/logout', element: <Logout /> }
+    ]
+  }
+])
+
 
 function App() {
-  const router = createBrowserRouter([
-    {
-      element: (
-        <div className='app-layout'>
-          <Header />
-          <Outlet />
-          <Footer />
-        </div>
-      ),
-      children: [
-        { path: '/', element: <HomePage /> },
-        { path: '/movies', element: <MoviesPage /> },
-        { path: '/profile/{id}', element: <Profile /> },
-        { path: '/login', element: <Login /> },
-        { path: '/register', element: <Register /> }
-      ]
-    }
-  ])
-
   return (
     <AuthProvider>
       <RouterProvider router={router} />

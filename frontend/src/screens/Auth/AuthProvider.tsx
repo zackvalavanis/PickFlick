@@ -26,6 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           const userData = await res.json()
           setUser(userData)
         } else {
+          console.log('users/me failed with status:', res.status)
           localStorage.removeItem('access_token')
           setToken(null)
         }
@@ -50,6 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setToken(null)
     setUser(null)
   }
+
   return (
     <AuthContext.Provider value={{ user, token, login, logout, isLoading }}>
       {children}

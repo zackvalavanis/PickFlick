@@ -3,42 +3,48 @@ import { Drawer, Button, List, ListItem, ListItemButton, ListItemText } from "@m
 import MenuIcon from '@mui/icons-material/Menu';
 import { useNavigate } from "react-router";
 import PickFlickLogo from '../../assets/pickflick-logo.svg'
+import { UseAuth } from "../Auth/UseAuth";
 
 
 export function Header() {
   const [open, setOpen] = useState(false)
-  const [user, setUser] = useState(false)
+  const { user } = UseAuth()
   const navigate = useNavigate()
 
   const items = [
-    { text: <img src={PickFlickLogo} style={{ height: "50px" }}></img>, path: '/' },
+    { text: <img src={PickFlickLogo} style={{ height: "50px" }} />, path: '/' },
     { text: "Movies", path: "/movies" },
     { text: "Watchlist", path: "/watchlist" },
     ...(user
       ? [{ text: "Profile", path: "/profile" }, { text: "Logout", path: "/logout" }]
       : [{ text: "Login", path: "/login" }, { text: "Sign Up", path: "/register" }]),
   ]
+  // ...rest unchanged
 
 
   const DrawerList = (
+
     <List>
-      {items.map(({ text, path }) => (
-        <ListItem key={text} disablePadding>
-          <ListItemButton
-            onClick={() => {
-              navigate(path)
-              setOpen(false)
-            }}
-            sx={{
-              color: "#c2bcbc",
-              "&:hover": { color: "#fff", backgroundColor: "rgba(255,255,255,0.08)" },
-            }}
-          >
-            <ListItemText primary={text} />
-          </ListItemButton>
-        </ListItem>
-      ))}
-    </List>
+
+      {
+        items.map(({ text, path }) => (
+          <ListItem key={path} disablePadding>
+            <ListItemButton
+              onClick={() => {
+                navigate(path)
+                setOpen(false)
+              }}
+              sx={{
+                color: "#c2bcbc",
+                "&:hover": { color: "#fff", backgroundColor: "rgba(255,255,255,0.08)" },
+              }}
+            >
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))
+      }
+    </List >
   )
 
   const toggleDrawer = (newOpen: boolean) => () => {
