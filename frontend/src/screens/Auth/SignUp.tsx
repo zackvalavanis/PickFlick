@@ -16,10 +16,36 @@ export function Register() {
 
 
 
-  const handleRegister = (e: React.SubmitEvent<HTMLFormElement>) => {
+  const handleRegister = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     setLoading(true)
     console.log("Log in", loading)
+
+    try {
+      const res = await fetch('http://localhost:8000/users', {
+        "method": "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          email: formData.email,
+          password: formData.password,
+        }
+        )
+      }
+      )
+
+      if (!res.ok) {
+        console.log("There was an error processing your request.")
+      }
+      const data = await res.json()
+
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 
 
@@ -63,6 +89,7 @@ export function Register() {
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </span>
             </div>
+            <button type='submit'>Sign Up</button>
           </form>
 
           <div className='bottom-box'>
