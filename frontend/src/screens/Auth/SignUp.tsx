@@ -42,13 +42,14 @@ export function Register() {
       }
       const data = await res.json()
 
+      console.log("USER DATA", data)
 
     } catch (error) {
       console.log(error)
+    } finally {
+      setLoading(false)
     }
   }
-
-
 
 
   return (
@@ -64,9 +65,24 @@ export function Register() {
           </div>
 
           <form className='form-login' onSubmit={handleRegister}>
-            <input name='first_name' placeholder="First Name" type='text' />
-            <input name='last_name' placeholder="Last Name" type='text' />
-            <input name='email' placeholder="Email" type='email' />
+            <input
+              name='first_name'
+              placeholder="First Name"
+              type='text'
+              onChange={(e) => setFormData({ ...formData, first_name: e.target.value })}
+            />
+            <input
+              name='last_name'
+              placeholder="Last Name"
+              type='text'
+              onChange={(e) => setFormData({ ...formData, last_name: e.target.value })}
+            />
+            <input
+              name='email'
+              placeholder="Email"
+              type='email'
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            />
             <div style={{ position: "relative" }}>
               <input
                 id='passwordField'
