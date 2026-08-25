@@ -29,6 +29,11 @@ async def discover(
     return discovered_film["results"]
 
 
+@router.get("/movies/{id}")
+async def get_movie(id: int):
+    return await tmdb.get_movie_details(id)
+
+
 @router.post("/movies/chat", response_model=ChatResponse)
 async def chat(body: ChatRequest):
     reply = await claude_agent.run_chat(body.message, body.history)
