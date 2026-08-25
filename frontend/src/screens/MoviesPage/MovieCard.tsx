@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import type { Movie } from "../../Types/types"
 import './MovieCard.css'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 
 export function MovieCard({ movie }: { movie: Movie }) {
@@ -17,7 +18,17 @@ export function MovieCard({ movie }: { movie: Movie }) {
           }
           alt={movie.title}
         />
-        <h3>{movie.title}</h3>
+        <div className='movie-title-button'>
+          <div className="left">
+
+          </div>
+          <div className="center">
+            <h3>{movie.title}</h3>
+          </div>
+          <div className="right">
+            <button><ThumbUpIcon /></button>
+          </div>
+        </div>
       </div>
     </div>
   )

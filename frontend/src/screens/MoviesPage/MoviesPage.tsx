@@ -4,6 +4,7 @@ import { useState } from "react"
 import type { Movie } from "../../Types/types"
 import { MovieCard } from "./MovieCard"
 import './MovieCard.css'
+import './MoviesPage.css'
 
 export function MoviesPage() {
   // const [query, setQuery] = useState("")
@@ -60,14 +61,17 @@ export function MoviesPage() {
   }
 
   return (
-    <div>
-      <input
-        type="text"
-        placeholder="Search Movies..."
-        value={movieTitle}
-        onChange={(e) => setMovieTitle(e.target.value)}
-      />
-      <button onClick={() => searchMovies(movieTitle)}>Search</button>
+    <div className="movies-page">
+      <div className="search">
+        <input
+          type="text"
+          placeholder="Search Movies..."
+          value={movieTitle}
+          onChange={(e) => setMovieTitle(e.target.value)}
+        />
+        <button onClick={() => searchMovies(movieTitle)}>Search</button>
+      </div>
+
       {loading && <p>Searching...</p>}
 
       <div className="movie-grid">

@@ -32,15 +32,16 @@ function App() {
           />
 
           <Header />
-
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/movies" element={<MoviesPage />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path='/movies/:id' element={<MovieDetail />} />
-          </Routes>
+          <main className="app-main">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/movies" element={<MoviesPage />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path='/movies/:id' element={<MovieDetail />} />
+            </Routes>
+          </main>
 
           <Footer />
         </div>

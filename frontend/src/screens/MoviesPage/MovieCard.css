@@ -1,19 +1,23 @@
+/* ---------- Grid ---------- */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 24px;
-  padding: 24px;
-  max-width: 80%;
+  gap: var(--page-gap);
+  padding: var(--page-gap);
+  max-width: 1400px;
   margin: 0 auto;
+  gap: 20px;
 }
 
+/* ---------- Card ---------- */
 .movie-card {
+  display: block;
+
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card-bg);
   text-decoration: none;
   color: inherit;
-  display: block;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #1a1a1a;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -22,23 +26,106 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
 }
 
+.movie-card:active {
+  transform: scale(0.99);
+}
+
 .movie-card img {
   width: 100%;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   display: block;
+  cursor: pointer;
 }
 
+.movie-card img:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+/* ---------- Title + like row ---------- */
 .movie-card h3 {
+  margin: 0;
   font-size: 0.9rem;
   font-weight: 600;
-  margin: 0;
-  padding: 12px 12px 14px;
   line-height: 1.3;
+  color: #fff;
+  text-align: center;
   /* clamp long titles to 2 lines so cards stay even */
   display: -webkit-box;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.movie-title-button {
+  background-color: rgba(0, 0, 0, 0.597);
+  display: flex;
+  align-items: center;
+  padding: 10px 8px 12px;
+}
+
+.movie-title-button .left,
+.movie-title-button .right {
+  flex: 0 0 40px;
+  display: flex;
+  justify-content: center;
   color: white;
-  text-align: center;
+}
+
+.movie-title-button .center {
+  flex: 1;
+  min-width: 0;
+  /* lets the title clamp instead of overflowing */
+}
+
+.movie-title-button button {
+  display: flex;
+  padding: 4px;
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.15s ease, transform 0.15s ease;
+}
+
+.movie-title-button button:hover {
+  color: var(--accent);
+  transform: scale(1.1);
+}
+
+.movie-title-button button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* add this class when a movie is liked */
+.movie-title-button button.liked {
+  color: var(--accent);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .movie-card h3 {
+    font-size: 0.8rem;
+  }
+
+  .movie-title-button {
+    padding: 8px 6px 10px;
+  }
 }
