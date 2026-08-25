@@ -3,6 +3,7 @@
 import { useState } from "react"
 import type { Movie } from "../../Types/types"
 import { MovieCard } from "./MovieCard"
+import './MovieCard.css'
 
 export function MoviesPage() {
   // const [query, setQuery] = useState("")
@@ -61,22 +62,19 @@ export function MoviesPage() {
   return (
     <div>
       <input
-        type='text'
+        type="text"
         placeholder="Search Movies..."
         value={movieTitle}
         onChange={(e) => setMovieTitle(e.target.value)}
-      >
-      </input>
+      />
       <button onClick={() => searchMovies(movieTitle)}>Search</button>
       {loading && <p>Searching...</p>}
 
-      <ul>
+      <div className="movie-grid">
         {searchResults.map((movie) => (
-          <li key={movie.id}>
-            <MovieCard movie={movie} />
-          </li>
+          <MovieCard key={movie.id} movie={movie} />
         ))}
-      </ul>
+      </div>
     </div>
   )
 }
