@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import type { Movie } from "../../Types/types"
-import { Link } from "react-router-dom"
+import { MovieCard } from "./MovieCard"
 
 export function MoviesPage() {
   // const [query, setQuery] = useState("")
@@ -11,21 +11,7 @@ export function MoviesPage() {
   // const [results, setResults] = useState<Movie[]>([]) //Need to add typing here
   const [searchResults, setSearchResults] = useState<Movie[]>([]) //Need to add typing here
 
-  function MovieCard({ movie }: { movie: Movie }) {
-    return (
-      <Link to={`/movies/${movie.id}`} state={movie} className="movie-card">
-        <img
-          src={
-            movie.poster_path
-              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : "/placeholder.png"
-          }
-          alt={movie.title}
-        />
-        <h3>{movie.title}</h3>
-      </Link>
-    )
-  }
+
 
   // const discoverMovies = async (filters: MovieFilters) => {
 
