@@ -25,3 +25,21 @@ export interface Register {
   email: string;
   password: string;
 }
+
+export interface MovieFilters {
+  title?: string | null;
+  genre?: number | null;
+  year?: number | null;
+  min_rating?: number | null
+  cast?: string | null
+  keywords?: string | null
+  monetization_types?: string | null
+}
+
+export interface Movie {
+  id: number
+  title: string
+  poster_path: string | null
+  release_date?: string
+  vote_average?: number
+}

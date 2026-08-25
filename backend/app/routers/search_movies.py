@@ -11,7 +11,7 @@ db_dependency = Depends(get_db)
 @router.get("/movies/search")
 async def search(query: str):
     movie = await tmdb.search_movies(query)
-    return movie
+    return movie["results"]
 
 
 @router.get("/movies/discover")
