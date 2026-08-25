@@ -2,17 +2,30 @@
 
 import { useState } from "react"
 import type { Movie } from "../../Types/types"
-import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 export function MoviesPage() {
   // const [query, setQuery] = useState("")
-  const navigate = useNavigate()
   const [movieTitle, setMovieTitle] = useState("")
   const [loading, setLoading] = useState(false)
   // const [results, setResults] = useState<Movie[]>([]) //Need to add typing here
   const [searchResults, setSearchResults] = useState<Movie[]>([]) //Need to add typing here
 
-
+  function MovieCard({ movie }: { movie: Movie }) {
+    return (
+      <Link to={`/movies/${movie.id}`} state={movie} className="movie-card">
+        <img
+          src={
+            movie.poster_path
+              ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+              : "/placeholder.png"
+          }
+          alt={movie.title}
+        />
+        <h3>{movie.title}</h3>
+      </Link>
+    )
+  }
 
   // const discoverMovies = async (filters: MovieFilters) => {
 
@@ -72,11 +85,10 @@ export function MoviesPage() {
       {loading && <p>Searching...</p>}
 
       <ul>
-        {searchResults.map((result) => (
-          <div key={result.id} onClick={() => navigate(`/movies/${result.id}`, { state: result })}>
-            <h1>{result.title}</h1>
-            <img src={`https://image.tmdb.org/t/p/w500${result.poster_path}`}></img>
-          </div>
+        {searchResults.map((movie) => (
+          <li key={movie.id}>
+            <MovieCard movie={movie} />
+          </li>
         ))}
       </ul>
     </div>
