@@ -1,18 +1,14 @@
 // import { useEffect } from "react"
 
-import { useState } from "react"
-import type { Movie } from "../../Types/types"
 import { MovieCard } from "./MovieCard"
 import './MovieCard.css'
 import './MoviesPage.css'
+import { useSearchMovies } from "../../hooks/SearchMovieHook"
+
 
 export function MoviesPage() {
-  // const [query, setQuery] = useState("")
-  const [movieTitle, setMovieTitle] = useState("")
-  const [loading, setLoading] = useState(false)
-  // const [results, setResults] = useState<Movie[]>([]) //Need to add typing here
-  const [searchResults, setSearchResults] = useState<Movie[]>([]) //Need to add typing here
-
+  const { movieTitle, setMovieTitle, loading, searchResults, searchMovies } =
+    useSearchMovies()
 
 
   // const discoverMovies = async (filters: MovieFilters) => {
@@ -41,24 +37,6 @@ export function MoviesPage() {
   //     setLoading(false)
   //   }
   // }
-
-  const searchMovies = async (title: string) => {
-    const params = new URLSearchParams({ query: title })
-    setLoading(true)
-
-
-    try {
-      const res = await fetch(`http://localhost:8000/movies/search?${params}`)
-      const data = await res.json()
-      console.log(data)
-      setSearchResults(data)
-      return data
-    } catch (error) {
-      console.error("Couldnt find the title", error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   return (
     <div className="movies-page">
