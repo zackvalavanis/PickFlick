@@ -76,3 +76,18 @@ async def discover_film(
         )
         resp.raise_for_status()
         return resp.json()
+
+
+async def get_movie_details(id: int) -> dict:
+    """Fetch full details for a single movie, including videos,
+    watch providers, and credits."""
+    async with httpx.AsyncClient() as client:
+        resp = await client.get(
+            f"{BASE_URL}/movie/{id}",
+            headers=HEADERS,
+            params={
+                "append_to_response": "videos,watch/providers,credits",
+            },
+        )
+        resp.raise_for_status()
+        return resp.json()
