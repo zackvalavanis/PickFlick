@@ -4,6 +4,7 @@ export interface User {
   last_name: string;
   email: string;
   created_at: string;
+  movies: Movie[]
 }
 
 export interface AuthContextType {
