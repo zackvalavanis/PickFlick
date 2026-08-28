@@ -1,6 +1,6 @@
 import uuid
 
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -16,3 +16,5 @@ class Movie(Base):
     poster_path = Column(String)
 
     user = relationship("User", back_populates="movies")
+
+    __table_args__ = UniqueConstraint("user_id", "tmdb_id", name="uq_user_movie")

@@ -5,6 +5,21 @@ from uuid import UUID
 from pydantic import BaseModel, ConfigDict, EmailStr
 
 
+class MovieCreate(BaseModel):
+    tmdb_id: int
+    title: str
+    poster_path: str | None = None
+
+
+class MoviePublic(BaseModel):
+    id: uuid
+    tmdb_id: int
+    title: str
+    poster_path: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class UserBase(BaseModel):
     first_name: str
     last_name: str
@@ -27,15 +42,6 @@ class UserUpdate(UserBase):
     first_name: str | None = None
     last_name: str | None = None
     email: str | None = None
-
-    model_config = ConfigDict(from_attributes=True)
-
-
-class MoviePublic(BaseModel):
-    id: uuid
-    tmdb_id: int
-    title: str
-    poster_path: str | None = None
 
     model_config = ConfigDict(from_attributes=True)
 
