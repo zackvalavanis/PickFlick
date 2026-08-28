@@ -12,7 +12,7 @@ class MovieCreate(BaseModel):
 
 
 class MoviePublic(BaseModel):
-    id: uuid
+    id: UUID
     tmdb_id: int
     title: str
     poster_path: str | None = None

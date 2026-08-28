@@ -7,6 +7,30 @@ import no_image from '../../assets/No_Image_Available.jpg'
 
 export function MovieCard({ movie }: { movie: Movie }) {
   const navigate = useNavigate()
+  const token = localStorage.getItem("access_token")
+
+  const handleAddToWatchList = async (movie: Movie) => {
+    console.log("adding to watchList")
+
+    try {
+      const res = await fetch(`http://localhost:8000/my-movies`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ tmdb_id: movie.id, title: movie.title, poster_path: movie.poster_path }),
+      })
+
+      if (!res.ok) {
+        throw new Error("Failed to add movie to watchlist")
+      }
+    } catch (error) {
+      console.error("Error adding movie to watchlist:", error)
+    }
+  }
+
+
   return (
     <div>
       <div className="movie-card">
@@ -27,7 +51,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
             <h3>{movie.title}</h3>
           </div>
           <div className="right">
-            <button><ThumbUpIcon /></button>
+            <button onClick={() => handleAddToWatchList(movie)}><ThumbUpIcon /></button>
           </div>
         </div>
       </div>
