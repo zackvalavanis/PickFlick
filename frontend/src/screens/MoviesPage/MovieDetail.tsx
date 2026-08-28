@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom"
 import type { Movie } from "../../Types/types"
 import { useEffect, useState } from "react"
+import no_image from '../../assets/No_Image_Available.jpg'
 
 export function MovieDetail() {
   const location = useLocation()
@@ -45,7 +46,7 @@ export function MovieDetail() {
         src={
           movie.poster_path
             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-            : "/placeholder.png"
+            : no_image
         }
         alt={movie.title}
       />

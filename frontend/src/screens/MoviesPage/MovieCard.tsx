@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom"
 import type { Movie } from "../../Types/types"
 import './MovieCard.css'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import no_image from '../../assets/No_Image_Available.jpg'
 
 
 export function MovieCard({ movie }: { movie: Movie }) {
@@ -14,7 +15,7 @@ export function MovieCard({ movie }: { movie: Movie }) {
           src={
             movie.poster_path
               ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-              : "/placeholder.png"
+              : no_image
           }
           alt={movie.title}
         />

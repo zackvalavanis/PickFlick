@@ -31,6 +31,15 @@ class UserUpdate(UserBase):
     model_config = ConfigDict(from_attributes=True)
 
 
+class MoviePublic(BaseModel):
+    id: uuid
+    tmdb_id: int
+    title: str
+    poster_path: str | None = None
+
+    model_config = ConfigDict(from_attributes=True)
+
+
 class UserResponse(UserBase):
     id: UUID
     first_name: str
@@ -38,6 +47,7 @@ class UserResponse(UserBase):
     created_at: datetime
     updated_at: datetime
     model_config = ConfigDict(from_attributes=True)
+    movies: list[MoviePublic] = []
 
 
 class LoginRequest(BaseModel):

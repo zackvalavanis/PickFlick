@@ -1,7 +1,10 @@
-from sqlalchemy import String, Column, DateTime, func
 import uuid
-from app.database import Base
+
+from sqlalchemy import Column, DateTime, String, func
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
+
+from app.database import Base
 
 
 class User(Base):
@@ -14,3 +17,5 @@ class User(Base):
     hashed_password = Column(String, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
+
+    movie = relationship("Movie", back_populates="user")
