@@ -11,6 +11,7 @@ import { Login } from "./screens/Auth/Login";
 import { Register } from "./screens/Auth/SignUp";
 import { AuthProvider } from "./screens/Auth/AuthProvider";
 import { MovieDetail } from "./screens/MoviesPage/MovieDetail";
+import { WatchList } from "./screens/WatchList/Watchlist";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path='/movies/:id' element={<MovieDetail />} />
+              <Route path='watchlist' element={<WatchList />} />
             </Routes>
           </main>
 

@@ -97,17 +97,20 @@ export function Header() {
             </ListItemButton>
           </ListItem>
 
-          <ListItem disablePadding>
-            <ListItemButton
-              onClick={() => navigateTo("/watchlist")}
-              sx={itemSx}
-            >
-              <ListItemText primary="Watchlist" />
-            </ListItemButton>
-          </ListItem>
 
           {user ? (
             <>
+
+              <ListItem disablePadding>
+                <ListItemButton
+                  onClick={() => navigateTo("/watchlist")}
+                  sx={itemSx}
+                >
+                  <ListItemText primary="Watchlist" />
+                </ListItemButton>
+              </ListItem>
+
+
               <ListItem disablePadding>
                 <ListItemButton
                   onClick={() => navigateTo("/profile")}
